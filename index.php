@@ -9,7 +9,10 @@ if(isset($_GET['delid']))
      curl_setopt($ch,CURLOPT_CUSTOMREQUEST,'DELETE');
      $result=curl_exec($ch);
 
-     echo $result;
+     if($result == 1)
+     {
+        header('Location:index.php');
+     }
 }
 ?>
 <!DOCTYPE html>
@@ -42,11 +45,12 @@ if(isset($_GET['delid']))
      <?php 
      
        $ch = curl_init();
-       curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/api/select-api.php');
+       curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/api/selectapi.php');
        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
        $result=curl_exec($ch);
 
        $final=json_decode($result);
+
 
        $i = 1;
        foreach($final as $data) 
