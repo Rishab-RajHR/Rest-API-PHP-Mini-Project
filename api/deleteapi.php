@@ -2,9 +2,9 @@
 
 include('connection.php');
 
-$id = $_GET['id'];
+$id =(int)$_GET['delid'];
 
-$sql = "DELETE FROM employee WHERE id=$id";
+$sql = "DELETE FROM employee WHERE id = $id";
 $result = mysqli_query($conn,$sql);
 
 ?>

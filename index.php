@@ -5,14 +5,18 @@ if(isset($_GET['delid']))
      $id = $_GET['delid'];
 
      $ch = curl_init();
-     curl_setopt($ch,CURLOPT_URL,'localhost://php/api/api/deleteapi.php?delid='.$id.'');
+     curl_setopt($ch,CURLOPT_URL,'http://localhost/api/api/deleteapi.php?delid='.$id.'');
      curl_setopt($ch,CURLOPT_CUSTOMREQUEST,'DELETE');
-     $result=curl_exec($ch);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-     if($result == 1)
+     $result=curl_exec($ch);
+    
+     if($result !== false)
      {
         header('Location:index.php');
      }
+
+      curl_close($ch);
 }
 ?>
 <!DOCTYPE html>
@@ -63,8 +67,8 @@ if(isset($_GET['delid']))
         <td><?php echo $data->name; ?></td>
         <td><?php echo $data->email; ?></td>
         <td><?php echo $data->mobile; ?></td>
-        <td><a href="">Edit</a></td>
-        <td><a href="index.php?delid=<?php echo $data->id; ?>">Delete</a></td>
+        <td><a href="edit.php?editid=<?php echo $data->id; ?>">Edit</a></td>
+        <td><a href="index.php?delid=<?php echo $data->id; ?>" onclick="return confirm('Do you want to delete this data')">Delete</a></td>
       </tr>
 
       <?php $i++; } ?>
