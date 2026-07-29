@@ -10,7 +10,7 @@ if(isset($_POST['submit']))
 
     $ch = curl_init();
 
-    curl_setopt($ch, CURLOPT_URL,'http://localhost/api/api/insertapi.php');
+    curl_setopt($ch, CURLOPT_URL,'http://localhost/api/api/request.php?work=insert');
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     $result=curl_exec($ch);
 

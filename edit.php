@@ -1,14 +1,22 @@
 <?php
 
+if(!isset($_GET['editid'])) {
+   die("Invalid request.");
+}
+
 $id=$_GET['editid'];
 
 $ch=curl_init();
     curl_setopt($ch,CURLOPT_URL,
-     'http://localhost/api/api/selectapibyid.php?editid='.$id.'');
+     'http://localhost/api/api/selectapibyid.php?editid='.$id.'&&work=selectbyid');
      curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
      $result=curl_exec($ch);
 
 $data = json_decode($result);
+
+if (empty($data) || !isset($data[0])) {
+    die("Record not found");
+}
 
 if(isset($_POST['submit']))
 {
@@ -20,11 +28,16 @@ if(isset($_POST['submit']))
 
     $ch = curl_init();
 
-    curl_setopt($ch, CURLOPT_URL,'http://localhost/api/api/updateapi.php?editid='.$id.'');
+    curl_setopt($ch, CURLOPT_URL,'http://localhost/api/api/updateapi.php?editid='.$id.'&&work=update');
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
     $result=curl_exec($ch);
 
-    echo $result;
+    if($result==1)
+    {
+       header('Location:index.php');
+       exit;
+    }
 }
 
 ?>

@@ -1,5 +1,7 @@
 <?php 
 
+
+
 if(isset($_GET['delid']))
 {
      $id = $_GET['delid'];
@@ -49,7 +51,7 @@ if(isset($_GET['delid']))
      <?php 
      
        $ch = curl_init();
-       curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/api/selectapi.php');
+       curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/api/request.php?work=select');
        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
        $result=curl_exec($ch);
 
