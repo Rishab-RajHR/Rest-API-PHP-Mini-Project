@@ -7,13 +7,17 @@ if(isset($_GET['delid']))
      $id = $_GET['delid'];
 
      $ch = curl_init();
-     curl_setopt($ch,CURLOPT_URL,'http://localhost/api/api/deleteapi.php?delid='.$id.'');
+     curl_setopt($ch,CURLOPT_URL,'http://localhost/api/api/deleteapi.php?delid='.$id.'&&work=delete&&token=M3qQIjM1Wy9Ovsz89CtZrIP');
      curl_setopt($ch,CURLOPT_CUSTOMREQUEST,'DELETE');
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
      $result=curl_exec($ch);
     
-     if($result !== false)
+     if($result == 'error')
+     {
+        echo 'Please Provide Valid Token';
+     }
+     else
      {
         header('Location:index.php');
      }
@@ -51,13 +55,19 @@ if(isset($_GET['delid']))
      <?php 
      
        $ch = curl_init();
-       curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/api/request.php?work=select');
+       curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/api/request.php?work=select&&token=M3qQIjM1Wy9Ovsz89CtZrIP');
        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
        $result=curl_exec($ch);
 
+       if($result == 'error')
+       {
+           echo 'Please Provide Valid Token';
+       }
+       else {
        $final=json_decode($result);
 
 
+      if(is_array($final) || is_object($final))
        $i = 1;
        foreach($final as $data) 
        {
@@ -73,7 +83,7 @@ if(isset($_GET['delid']))
         <td><a href="index.php?delid=<?php echo $data->id; ?>" onclick="return confirm('Do you want to delete this data')">Delete</a></td>
       </tr>
 
-      <?php $i++; } ?>
+      <?php $i++; } } ?>
     </tbody>
   </table>
 </div>
